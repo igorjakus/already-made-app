@@ -7,49 +7,34 @@
 
 import SwiftUI
 
-enum Time {
-    case hour
-    case month
-    case year
-}
 
 struct ContentView: View {
-    @State private var money: String = "0"
-    @State private var whatTime: Time = .month
+    @State private var money: String = "100000"
+    @State private var perWhat: String = "month"
+    @State private var currency: String = "PLN"
     
     var body: some View {
-        VStack {
-            Text("How much money you make for")
-            HStack {
-                Button {
-                    whatTime = .hour
-                } label: {
-                    Text("hour")
-                }
-                Button {
-                    whatTime = .month
-                } label: {
-                    Text("month")
-                }
-                Button {
-                    whatTime = .year
-                } label: {
-                    Text("year")
-                }
+        HStack {
+            Text("My")
+            Picker("salary", selection: $perWhat) {
+                Text("hourly").tag("hour")
+                Text("weekly").tag("week")
+                Text("monthly").tag("month")
+                Text("annual").tag("year")
             }
+            Text("salary is")
             TextField("amount of money", text: $money)
-            .keyboardType(.numberPad)
-            .onSubmit {
-                print(":D")
-            }
-            switch whatTime {
-            case .hour:
-                Text("hour")
-            case .month:
-                Text("month")
-            case .year:
-                Text("year")
-            }
+                .keyboardType(.numberPad)
+                .onSubmit {
+                    print(":D")
+                }
+                .frame(width: 80)
+            Picker("currency", selection: $currency) {
+                Text("PLN").tag("PLN")
+                Text("€").tag("€")
+                Text("$").tag("$")
+                Text("£").tag("£")
+            }.frame(width: 75)
         }
     }
 }
