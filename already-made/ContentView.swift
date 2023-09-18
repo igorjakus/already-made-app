@@ -7,13 +7,8 @@
 
 import SwiftUI
 
-
-struct ContentView: View {
-    @State private var money: String = "100000"
-    @State private var perWhat: String = "month"
-    @State private var currency: String = "PLN"
-    
-    var body: some View {
+extension ContentView {
+    private var inputSurvey: some View {
         HStack {
             Text("My")
             Picker("salary", selection: $perWhat) {
@@ -36,6 +31,16 @@ struct ContentView: View {
                 Text("£").tag("£")
             }.frame(width: 75)
         }
+    }
+}
+
+struct ContentView: View {
+    @State private var money: String = "100000"
+    @State private var perWhat: String = "month"
+    @State private var currency: String = "PLN"
+    
+    var body: some View {
+        inputSurvey
     }
 }
 
