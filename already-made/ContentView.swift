@@ -20,9 +20,6 @@ extension ContentView {
             Text("salary is")
             TextField("amount of money", text: $money)
                 .keyboardType(.numberPad)
-                .onSubmit {
-                    print(":D")
-                }
                 .frame(width: 80)
             Picker("currency", selection: $currency) {
                 Text("PLN").tag("PLN")
@@ -34,13 +31,54 @@ extension ContentView {
     }
 }
 
+extension ContentView {
+    private var timeCounting: some View {
+        Group {
+            HStack {
+                Button(action: startCounting) {
+                    Text("Start counting")
+                }
+                Button(action: stopCounting) {
+                    Text("Stop counting")
+                }
+            }
+            Text("Elapsed time: \(elapsedTime)")
+        }
+    }
+    
+    private func startCounting() {
+        running = true
+        startTime = Date()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+                    if let startTime = self.startTime {
+                        let currentTime = Date()
+                        self.elapsedTime = currentTime.timeIntervalSince(startTime)
+                    }
+                }
+    }
+    
+    private func stopCounting() {
+        running = false
+        timer?.invalidate()
+    }
+}
+
 struct ContentView: View {
     @State private var money: String = "100000"
     @State private var perWhat: String = "month"
     @State private var currency: String = "PLN"
     
+    @State private var elapsedTime = 0.0
+    @State private var running: Bool = false
+    @State private var startTime: Date?
+    @State private var timer: Timer?
+    
     var body: some View {
-        inputSurvey
+        VStack {
+            inputSurvey
+            timeCounting
+        }
+        
     }
 }
 
