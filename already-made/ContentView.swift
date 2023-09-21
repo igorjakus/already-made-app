@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 extension ContentView {
     private var inputSurvey: some View {
         HStack {
@@ -47,12 +48,14 @@ extension ContentView {
     }
     
     private func startCounting() {
+        perHour = countPerHour()
         running = true
         startTime = Date()
         timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
                     if let startTime = self.startTime {
                         let currentTime = Date()
                         self.elapsedTime = currentTime.timeIntervalSince(startTime)
+                        alreadyMadeMoney = Int(perHour * elapsedTime / 3600)
                     }
                 }
     }
@@ -63,22 +66,53 @@ extension ContentView {
     }
 }
 
+extension ContentView {
+    private var alreadyMadeView: some View {
+        VStack {
+            Text("Already made \(alreadyMadeMoney) \(currency)")
+                .font(.title)
+                .bold(true)
+            Text("the value of \(alreadyMadeMoney/20) kebabs!")
+        }.padding(.top)
+    }
+    
+    private func countPerHour() -> Double {
+        perHour = Double(money) ?? 0.0
+        if perWhat == "day" {
+            perHour /= 8
+        } else if perWhat == "week" {
+            perHour /= 8*5
+        } else if perWhat == "month" {
+            perHour /= 169
+        } else if perWhat == "year" {
+            perHour /= 169*12
+        }
+        return perHour
+    }
+}
+
 struct ContentView: View {
+    //inputSurvey
     @State private var money: String = "100000"
     @State private var perWhat: String = "month"
     @State private var currency: String = "PLN"
     
-    @State private var elapsedTime = 0.0
+    // timeCounting
+    @State private var elapsedTime: Double = 0.0
     @State private var running: Bool = false
     @State private var startTime: Date?
     @State private var timer: Timer?
+    
+    // alreadyMadeView
+    @State private var perHour: Double = 0.0
+    @State private var alreadyMadeMoney: Int = 225
     
     var body: some View {
         VStack {
             inputSurvey
             timeCounting
+            alreadyMadeView
         }
-        
     }
 }
 
