@@ -43,26 +43,26 @@ extension ContentView {
                     Text("Stop counting")
                 }
             }
-            Text("Elapsed time: \(elapsedTime)")
+            Text("Elapsed time: \(elapsedTime)s")
         }
     }
     
     private func startCounting() {
-        perHour = countPerHour()
         running = true
-        startTime = Date()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
-                    if let startTime = self.startTime {
-                        let currentTime = Date()
-                        self.elapsedTime = currentTime.timeIntervalSince(startTime)
-                        alreadyMadeMoney = Int(perHour * elapsedTime / 3600)
-                    }
-                }
+        perHour = countPerHour()
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) {_ in
+            elapsedTime += 1
+            alreadyMadeMoney = Int(perHour * Double(elapsedTime) / 3600)
+        }
     }
     
     private func stopCounting() {
         running = false
         timer?.invalidate()
+    }
+    
+    private func resetTimer() {
+        elapsedTime = 0
     }
 }
 
@@ -98,14 +98,13 @@ struct ContentView: View {
     @State private var currency: String = "PLN"
     
     // timeCounting
-    @State private var elapsedTime: Double = 0.0
     @State private var running: Bool = false
-    @State private var startTime: Date?
+    @State private var elapsedTime: Int = 0
     @State private var timer: Timer?
     
     // alreadyMadeView
     @State private var perHour: Double = 0.0
-    @State private var alreadyMadeMoney: Int = 225
+    @State private var alreadyMadeMoney: Int = 0
     
     var body: some View {
         VStack {
