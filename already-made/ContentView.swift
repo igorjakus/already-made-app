@@ -35,12 +35,19 @@ extension ContentView {
 extension ContentView {
     private var timeCounting: some View {
         Group {
-            HStack {
+            if !(running) {
                 Button(action: startCounting) {
                     Text("Start counting")
                 }
-                Button(action: stopCounting) {
-                    Text("Stop counting")
+            }
+            else {
+                HStack {
+                    Button(action: stopCounting) {
+                        Text("Stop")
+                    }.padding(.horizontal)
+                    Button(action: resetTimer) {
+                        Text("Reset")
+                    }
                 }
             }
             Text("Elapsed time: \(elapsedTime)s")
