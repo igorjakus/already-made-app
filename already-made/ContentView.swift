@@ -70,6 +70,9 @@ extension ContentView {
     
     private func resetTimer() {
         elapsedTime = 0
+        running = false
+        timer?.invalidate()
+        
     }
 }
 
