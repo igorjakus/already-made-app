@@ -47,7 +47,7 @@ extension ContentView {
                     }.padding(.horizontal)
                     Button(action: resetTimer) {
                         Text("Reset")
-                    }
+                    }.padding(.horizontal)
                 }
             }
             Text("Elapsed time: \(elapsedTime)s")
