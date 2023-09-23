@@ -101,6 +101,18 @@ extension ContentView {
     }
 }
 
+extension ContentView {
+    private var settingsButton: some View {
+        Button(action: settings) {
+            Text("Settings")
+        }
+    }
+    
+    private func settings() {
+        
+    }
+}
+
 struct ContentView: View {
     //inputSurvey
     @State private var money: String = "100000"
@@ -118,9 +130,12 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
+            Spacer()
             inputSurvey
-            timeCounting
             alreadyMadeView
+            Spacer()
+            timeCounting
+            settingsButton
         }
     }
 }
