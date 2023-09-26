@@ -83,7 +83,7 @@ extension ContentView {
             Text("Already made \(alreadyMadeMoney) \(currency)")
                 .font(.title)
                 .bold(true)
-            Text("the value of \(alreadyMadeMoney/20) kebabs!")
+            Text(theValueOf(money: alreadyMadeMoney, currency: currency))
         }.padding(.top)
     }
     
@@ -100,6 +100,25 @@ extension ContentView {
             perHour /= 169*12
         }
         return perHour
+    }
+    
+    // todo: use exchange rate of currency and switch "the value of"
+    // for different amounts of money
+    private func theValueOf(money: Int, currency: String) -> String {
+        var str: String = "the value of"
+        str += " \(money/20) kebabs!"
+        return str
+    }
+    
+    /// Returns the exchange rate between a given currency and the US dollar
+    private func exchangeRate(of currency: String) -> Double {
+        // as of September 26, 2023
+        switch currency {
+        case "PLN": return 0.23
+        case "€": return 1.06
+        case "£": return 1.22
+        default: return 1.0
+        }
     }
 }
 
