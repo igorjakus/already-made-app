@@ -33,6 +33,7 @@ extension ContentView {
 }
 
 extension ContentView {
+    /// Start counting, Stop and Reset buttons
     private var timeCounting: some View {
         Group {
             if !(running) {
@@ -86,6 +87,7 @@ extension ContentView {
         }.padding(.top)
     }
     
+    /// Estimates how much a person earns per hour
     private func countPerHour() -> Double {
         perHour = Double(money) ?? 0.0
         if perWhat == "day" {
